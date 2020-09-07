@@ -1,5 +1,6 @@
 # t3_segmentation
 
+## How to run?
 ```
 1. pip install virtualenv
 2. virtualenv venvt
