@@ -15,8 +15,7 @@ def download_github_content(path):
 
 def setup_workshop():
     try:
-        download_github_content("utils/color_segmentation.py")
-        download_github_content("utils/visualization.py")
+        download_github_content("utils/segmentation.py")
         print("Workshop enabled successfully!")
     except Exception as e:
         raise e
