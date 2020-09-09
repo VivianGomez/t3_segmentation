@@ -48,7 +48,7 @@ def cambianCentroides(centroides, centroidesItAnterior, error):
 def kmeans(nGrupos, limite, error, aleatorio, centroides):
 	centroidesAct = []
 	centroidesItAnterior = []
-	i = 1
+	iteracion = 1
 
 	if not aleatorio:
 		centroidesAct = centroides
@@ -59,12 +59,12 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 			print("Coordenadas aleatorias ", a, b)
 			cent = imagenCargada[a, b]
 			print("Pixel ", cent)
-			centroidesAct.append(cent)
+			centroidesAct.append(tuple(cent))
 
 	print("C ", centroidesAct)
-	while not cambianCentroides(centroidesAct, centroidesItAnterior, error) and i <= limite:
-		print("Iteracion actual -> " + str(i))
-		i += 1
+	while not cambianCentroides(centroidesAct, centroidesItAnterior, error) and iteracion <= limite:
+		print("Iteracion actual -> " + str(iteracion))
+		iteracion += 1
 		centroidesItAnterior = centroidesAct 								
 		grupos = asignacionPC(centroidesAct) 						
 		centroidesAct = actualizarCentroides(centroidesItAnterior, grupos) 
@@ -88,11 +88,11 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 
 	return centroidesAct
 
-k = 2
+k = 3
 limite = 25
 error = 5
 img = "images/1.jpg"
 imagenCargada = io.imread(img)
 img_width, img_height, deph = imagenCargada.shape
 
-imagenSegmentada = kmeans(k, limite, error, False, [(80, 108, 173), (87, 150, 121)])
+imagenSegmentada = kmeans(k, limite, error, False, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
