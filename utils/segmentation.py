@@ -63,7 +63,7 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 
 	print("C ", centroidesAct)
 	while not cambianCentroides(centroidesAct, centroidesItAnterior, error) and i <= limite:
-		print("Iteration #" + str(i))
+		print("Iteracion actual -> " + str(i))
 		i += 1
 		centroidesItAnterior = centroidesAct 								
 		grupos = asignacionPC(centroidesAct) 						
