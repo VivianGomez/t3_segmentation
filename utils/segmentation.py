@@ -81,8 +81,7 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 				if d < distanciaMinima:
 					distanciaMinima = d
 					centroideMin = i
-			RGB_value = centroidesAct[centroideMin]
-			img[x, y] = RGB_value
+			img[x, y] = centroidesAct[centroideMin]
 
 	plt.imshow(img)
 	plt.show()
