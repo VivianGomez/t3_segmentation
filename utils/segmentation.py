@@ -116,7 +116,5 @@ def kmeans(nGrupos, imagenCargada, limite, error, aleatorio, centroides):
 k = 3
 limite = 25
 error = 5
-img = "images/1.jpg"
+img = "utils/images/1.jpg"
 imagenCargada = io.imread(img)
-
-kmeans(k, imagenCargada, limite, error, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
