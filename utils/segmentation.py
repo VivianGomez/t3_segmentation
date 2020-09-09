@@ -1,8 +1,99 @@
 from skimage import io
+import matplotlib.pyplot as plt
 import numpy
 
+def asignacionPC(centroides):
+	grupos = {}
+
+	for x in range(0, img_width):
+		for y in range(0, img_height):
+			pixelActual = imagenCargada[x, y]
+			distanciaMinima = 99999
+			centroideMin = 0
+
+			for i in range(0, len(centroides)):
+				d = numpy.sqrt(int((centroides[i][0] - pixelActual[0]))**2 + int((centroides[i][1] - pixelActual[1]))**2 + int((centroides[i][2] - pixelActual[2]))**2)
+				if d < distanciaMinima:
+					distanciaMinima = d
+					centroideMin = i
+			try:
+				grupos[centroideMin].append(pixelActual)
+			except KeyError:
+				grupos[centroideMin] = [pixelActual]
+
+	return grupos
+
+def actualizarCentroides(centroides, grupos):
+	actualizados = []	
+	for posCentroide in sorted(grupos.keys()):
+		n = numpy.mean(grupos[posCentroide], axis=0)
+		centroideNuevo = (int(n[0]), int(n[1]), int(n[2]))
+		actualizados.append(centroideNuevo)
+
+	return actualizados
+
+def cambianCentroides(centroides, centroidesItAnterior, error):
+	if len(centroidesItAnterior) == 0:
+		return False
+
+	for i in range(0, len(centroides)):
+		cent = centroides[i]
+		centroideAnterior = centroidesItAnterior[i]
+		if ((int(centroideAnterior[0]) - error) <= cent[0] <= (int(centroideAnterior[0]) + error)) and ((int(centroideAnterior[1]) - error) <= cent[1] <= (int(centroideAnterior[1]) + error)) and ((int(centroideAnterior[2]) - error) <= cent[2] <= (int(centroideAnterior[2]) + error)):
+			continue
+		else:
+			return False
+	return True
+
+def kmeans(nGrupos, limite, error, aleatorio, centroides):
+	centroidesAct = []
+	centroidesItAnterior = []
+	i = 1
+
+	if not aleatorio:
+		centroidesAct = centroides
+	else:
+		for k in range(0, nGrupos):
+			a = numpy.random.randint(0, img_width)
+			b = numpy.random.randint(0, img_height)
+			print("Coordenadas aleatorias ", a, b)
+			cent = imagenCargada[a, b]
+			print("Pixel ", cent)
+			centroidesAct.append(cent)
+
+	print("C ", centroidesAct)
+	while not cambianCentroides(centroidesAct, centroidesItAnterior, error) and i <= limite:
+		print("Iteration #" + str(i))
+		i += 1
+		centroidesItAnterior = centroidesAct 								
+		grupos = asignacionPC(centroidesAct) 						
+		centroidesAct = actualizarCentroides(centroidesItAnterior, grupos) 
+		img = numpy.zeros((img_width, img_height, 3), numpy.uint8)
+
+	for x in range(img_width):
+		for y in range(img_height):
+			distanciaMinima = 9999
+			centroideMin = 0
+			pixel = imagenCargada[x, y]
+
+			for i in range(0, len(centroidesAct)):
+				d = numpy.sqrt(int((centroidesAct[i][0] - pixel[0]))**2 + int((centroidesAct[i][1] - pixel[1]))**2 + int((centroidesAct[i][2] - pixel[2]))**2)
+				if d < distanciaMinima:
+					distanciaMinima = d
+					centroideMin = i
+			RGB_value = centroidesAct[centroideMin]
+			img[x, y] = RGB_value
+
+	plt.imshow(img)
+	plt.show()
+
+	return centroidesAct
+
+k = 2
+limite = 25
+error = 5
 img = "images/1.jpg"
 imagenCargada = io.imread(img)
-img_width, img_height, depth = imagenCargada.shape
+img_width, img_height, deph = imagenCargada.shape
 
-print(img_width, img_height, depth)
+imagenSegmentada = kmeans(k, limite, error, False, [(80, 108, 173), (87, 150, 121)])
