@@ -1,6 +1,29 @@
+import requests
 from skimage import io
 import matplotlib.pyplot as plt
 import numpy
+
+def download_image(url, filename="image.jpg"):
+    """
+    Function that downloads and opens the image
+    :param url: the url of the image
+    :param filename: the filename of the image
+    :return: the image loaded in memory
+    """
+    # We get the image address
+    r = requests.get(url)
+
+    # We open the image in "write-mode"
+    with open(filename, "wb") as f:
+        # We write the content to the file
+        f.write(r.content)
+
+    # Read the image with the module imread
+    img = io.imread(filename)
+
+    # Print the image shape
+    print(f"The shape of the image is: {img.shape}")
+    return img
 
 def asignacionPC(centroides):
 	grupos = {}
@@ -95,4 +118,4 @@ img = "images/1.jpg"
 imagenCargada = io.imread(img)
 img_width, img_height, deph = imagenCargada.shape
 
-imagenSegmentada = kmeans(k, limite, error, False, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
+imagenSegmentada = kmeans(k, limite, error, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
