@@ -12,7 +12,7 @@ def asignacionPC(centroides):
 			centroideMin = 0
 
 			for i in range(0, len(centroides)):
-				d = numpy.sqrt(int((centroides[i][0] - pixelActual[0]))**2 + int((centroides[i][1] - pixelActual[1]))**2 + int((centroides[i][2] - pixelActual[2]))**2)
+				d = numpy.sqrt((int(centroides[i][0]) - int(pixelActual[0]))**2 + (int(centroides[i][1]) - int(pixelActual[1]))**2 + (int(centroides[i][2]) - int(pixelActual[2]))**2)
 				if d < distanciaMinima:
 					distanciaMinima = d
 					centroideMin = i
@@ -77,7 +77,7 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 			pixel = imagenCargada[x, y]
 
 			for i in range(0, len(centroidesAct)):
-				d = numpy.sqrt(int((centroidesAct[i][0] - pixel[0]))**2 + int((centroidesAct[i][1] - pixel[1]))**2 + int((centroidesAct[i][2] - pixel[2]))**2)
+				d = numpy.sqrt((int(centroidesAct[i][0]) - int(pixel[0]))**2 + (int(centroidesAct[i][1]) - int(pixel[1]))**2 + (int(centroidesAct[i][2]) - int(pixel[2]))**2)
 				if d < distanciaMinima:
 					distanciaMinima = d
 					centroideMin = i
@@ -95,4 +95,4 @@ img = "images/1.jpg"
 imagenCargada = io.imread(img)
 img_width, img_height, deph = imagenCargada.shape
 
-imagenSegmentada = kmeans(k, limite, error, False, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
+imagenSegmentada = kmeans(k, limite, error, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
