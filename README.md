@@ -1,7 +1,8 @@
 # t3_segmentation
 
 
-## How to run?
+### How to run?
+## Local environment
 Open a command prompt at the root folder of this repository, inside run the following commands:
 ```
 1. pip install virtualenv
@@ -11,4 +12,12 @@ Open a command prompt at the root folder of this repository, inside run the foll
 5. pip install ipykernel
 6. python -m ipykernel install --user --name=venvt
 7. jupyter notebook
+```
+
+## Google Colab
+```
+!shred -u setup_colab.py
+!wget "https://raw.githubusercontent.com/VivianGomez/t3_segmentation/master/setup_colab.py" -O setup_colab.py
+import setup_colab as setup
+setup.setup_workshop()
 ```
