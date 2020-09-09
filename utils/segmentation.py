@@ -25,7 +25,7 @@ def download_image(url, filename="image.jpg"):
     print(f"The shape of the image is: {img.shape}")
     return img
 
-def asignacionPC(centroides):
+def asignacionPC(centroides, img_width, img_height):
 	grupos = {}
 
 	for x in range(0, img_width):
@@ -68,10 +68,12 @@ def cambianCentroides(centroides, centroidesItAnterior, error):
 			return False
 	return True
 
-def kmeans(nGrupos, limite, error, aleatorio, centroides):
+def kmeans(nGrupos, imagenCargada, limite, error, aleatorio, centroides):
 	centroidesAct = []
 	centroidesItAnterior = []
 	iteracion = 1
+
+	img_width, img_height, deph = imagenCargada.shape
 
 	if not aleatorio:
 		centroidesAct = centroides
@@ -89,7 +91,7 @@ def kmeans(nGrupos, limite, error, aleatorio, centroides):
 		print("Iteracion actual -> " + str(iteracion))
 		iteracion += 1
 		centroidesItAnterior = centroidesAct 								
-		grupos = asignacionPC(centroidesAct) 						
+		grupos = asignacionPC(centroidesAct, img_width, img_height) 						
 		centroidesAct = actualizarCentroides(centroidesItAnterior, grupos) 
 		img = numpy.zeros((img_width, img_height, 3), numpy.uint8)
 
@@ -116,6 +118,5 @@ limite = 25
 error = 5
 img = "images/1.jpg"
 imagenCargada = io.imread(img)
-img_width, img_height, deph = imagenCargada.shape
 
-imagenSegmentada = kmeans(k, limite, error, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
+kmeans(k, imagenCargada, limite, error, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
