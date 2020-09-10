@@ -55,20 +55,20 @@ def actualizarCentroides(centroides, grupos):
 
 	return actualizados
 
-def cambianCentroides(centroides, centroidesItAnterior, error):
+def cambianCentroides(centroides, centroidesItAnterior, umbral):
 	if len(centroidesItAnterior) == 0:
 		return False
 
 	for i in range(0, len(centroides)):
 		cent = centroides[i]
 		centroideAnterior = centroidesItAnterior[i]
-		if ((int(centroideAnterior[0]) - error) <= cent[0] <= (int(centroideAnterior[0]) + error)) and ((int(centroideAnterior[1]) - error) <= cent[1] <= (int(centroideAnterior[1]) + error)) and ((int(centroideAnterior[2]) - error) <= cent[2] <= (int(centroideAnterior[2]) + error)):
+		if ((int(centroideAnterior[0]) - umbral) <= cent[0] <= (int(centroideAnterior[0]) + umbral)) and ((int(centroideAnterior[1]) - umbral) <= cent[1] <= (int(centroideAnterior[1]) + umbral)) and ((int(centroideAnterior[2]) - umbral) <= cent[2] <= (int(centroideAnterior[2]) + umbral)):
 			continue
 		else:
 			return False
 	return True
 
-def kmeans(nGrupos, imagenCargada, limite, error, aleatorio, centroides):
+def kmeans(nGrupos, imagenCargada, limite, umbral, aleatorio, centroides):
 	centroidesAct = []
 	centroidesItAnterior = []
 	iteracion = 1
@@ -87,7 +87,7 @@ def kmeans(nGrupos, imagenCargada, limite, error, aleatorio, centroides):
 			centroidesAct.append(tuple(cent))
 
 	print("C ", centroidesAct)
-	while not cambianCentroides(centroidesAct, centroidesItAnterior, error) and iteracion <= limite:
+	while not cambianCentroides(centroidesAct, centroidesItAnterior, umbral) and iteracion <= limite:
 		print("Iteracion actual -> " + str(iteracion))
 		iteracion += 1
 		centroidesItAnterior = centroidesAct 								
