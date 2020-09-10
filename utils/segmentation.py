@@ -107,10 +107,6 @@ def kmeans(nGrupos, imagenCargada, limite, umbral, aleatorio, centroides):
 					distanciaMinima = d
 					centroideMin = i
 			img[x, y] = centroidesAct[centroideMin]
-
-	plt.imshow(img)
-	plt.show()
-
 	return img
 
 #kmeans(3, io.imread("images/1.jpg"), 25, 5, True, [(31, 32, 27), (179, 176, 221), (87, 125, 128)])
