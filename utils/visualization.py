@@ -1,20 +1,29 @@
 import matplotlib.pyplot as plt
+from skimage import io
 import requests
 import numpy as np
 
 def download_image(url, filename="image.jpg"):
     """
-    Function that downloads an image to a local directory
-    :param url: The url of the image
+    Function that downloads and opens the image
+    :param url: the url of the image
     :param filename: the filename of the image
+    :return: the image loaded in memory
     """
+    # We get the image address
     r = requests.get(url)
 
-    # We open the file in 'write-mode'
+    # We open the image in "write-mode"
     with open(filename, "wb") as f:
-        # Write the content to the file.
+        # We write the content to the file
         f.write(r.content)
-    return
+
+    # Read the image with the module imread
+    img = io.imread(filename)
+
+    # Print the image shape
+    print(f"The shape of the image is: {img.shape}")
+    return img
 
 def imshow(img, title=None):
     """
